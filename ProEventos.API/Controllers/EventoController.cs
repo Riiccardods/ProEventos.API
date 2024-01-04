@@ -33,6 +33,10 @@ namespace ProEventos.API.Controllers
         
 
 
+
+
+
+
         [HttpGet]
         public IEnumerable<Evento> Get()
         {
@@ -48,6 +52,9 @@ namespace ProEventos.API.Controllers
 
 
         }
+
+
+
 
     }
 }
