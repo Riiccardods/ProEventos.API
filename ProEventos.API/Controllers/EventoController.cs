@@ -1,57 +1,108 @@
+ï»¿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using ProEventos.API.Data;
 using ProEventos.API.Models;
 
 namespace ProEventos.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class EventosController : ControllerBase
+    [ApiController]
+    public class EventoController : ControllerBase
     {
-        public IEnumerable<Evento> _evento = new Evento[] {
-            new Evento()
+        private readonly DataContext _context;
+
+        public EventoController(DataContext context)
         {
-            EventoId = 1,
-            Tema = "Angular 11 e .Net 8",
-            Local = "Brasília",
-            Lote = "1º Lote",
-            QtdPessoas = 250,
-            DataEvento = DateTime.Now.AddDays(2).ToString("dd-MM-yyyy"), // Formato ISO 8601
-            ImagemURL = "foto.png" // Certifique-se de que esta imagem existe no projeto
-        },
-        new Evento()
-              {
-                EventoId = 2,
-                Tema = "Angular 11 e .Net 8 e suas novidades",
-                Local = "Rio de Janeiro",
-                Lote = "2º Lote",
-                QtdPessoas = 350,
-                DataEvento = DateTime.Now.AddDays(3).ToString("dd-MM-yyyy"), // Formato ISO 8601
-                ImagemURL = "foto1.png" // Certifique-se de que esta imagem existe no projeto
-              }
-        };
-        
+            _context = context;
+        }
 
-
-
+        // GET: api/Evento
         [HttpGet]
-        public IEnumerable<Evento> Get()
+        public async Task<ActionResult<IEnumerable<Evento>>> GetEventos()
         {
-            return _evento;
-            
-            
+            return await _context.Eventos.ToListAsync();
         }
 
+        // GET: api/Evento/5
         [HttpGet("{id}")]
-        public IEnumerable<Evento> GetById(int id)
+        public async Task<ActionResult<Evento>> GetEvento(int id)
         {
-            return _evento.Where(evento => evento.EventoId == id);
+            var evento = await _context.Eventos.FindAsync(id);
 
+            if (evento == null)
+            {
+                return NotFound();
+            }
 
+            return evento;
         }
 
+        // PUT: api/Evento/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEvento(int id, Evento evento)
+        {
+            if (id != evento.EventoId)
+            {
+                return BadRequest();
+            }
 
+            _context.Entry(evento).State = EntityState.Modified;
 
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
+            return NoContent();
+        }
+
+        // POST: api/Evento
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Evento>> PostEvento(Evento evento)
+        {
+            _context.Eventos.Add(evento);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetEvento", new { id = evento.EventoId }, evento);
+        }
+
+        // DELETE: api/Evento/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEvento(int id)
+        {
+            var evento = await _context.Eventos.FindAsync(id);
+            if (evento == null)
+            {
+                return NotFound();
+            }
+
+            _context.Eventos.Remove(evento);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool EventoExists(int id)
+        {
+            return _context.Eventos.Any(e => e.EventoId == id);
+        }
     }
 }
