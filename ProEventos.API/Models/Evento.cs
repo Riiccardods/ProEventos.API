@@ -3,7 +3,6 @@
     public class Evento
     {
 
-
         public int EventoId { get; set; }
         public string Local { get; set; }
         public string DataEvento { get; set; }
