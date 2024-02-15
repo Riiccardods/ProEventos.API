@@ -11,7 +11,5 @@
         public string Lote { get; set; }
         public string ImagemURL { get; set; }
 
-
-
     }
 }
