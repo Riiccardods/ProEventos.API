@@ -7,6 +7,7 @@
 
         public string Local { get; set; }
 
+
         public string DataEvento { get; set; }
 
 
