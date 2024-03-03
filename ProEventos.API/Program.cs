@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 ////aqui codigo que nao tenho que decorar
-builder.Services.AddDbContext<DataContext>(options => /*configura o contexto do Entity Framework Core para interagir com o banco de dados.*/
-options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoSQL"))); /*configura o contexto do Entity Framework Core para interagir com o banco de dados.*/
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoSQL")));
 ////aqui codigo que nao tenho que decorar
 
 
