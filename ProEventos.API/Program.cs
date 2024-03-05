@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ProEventos.API.Data;
+using RICARDOAPI.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

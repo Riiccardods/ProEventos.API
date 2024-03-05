@@ -1,6 +1,6 @@
-@ProEventos.API_HostAddress = http://localhost:5224
+@RICARDOAPI.API_HostAddress = http://localhost:5224
 
-GET {{ProEventos.API_HostAddress}}/weatherforecast/
+GET {{RICARDOAPI.API.API_HostAddress}}/api/mensagenscontato
 Accept: application/json
 
 ###

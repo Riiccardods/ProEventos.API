@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProEventos.API.Data;
+using RICARDOAPI.API.Data;
 
 #nullable disable
 
-namespace ProEventos.API.Migrations
+namespace RICARDOAPI.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240303113432_nova")]
-    partial class nova
+    [Migration("20240304235621_A")]
+    partial class A
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,40 +24,33 @@ namespace ProEventos.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProEventos.API.Models.Evento", b =>
+            modelBuilder.Entity("ProEventos.API.Models.MensagemContato", b =>
                 {
-                    b.Property<int>("EventoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DataEvento")
+                    b.Property<string>("Assunto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagemURL")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Local")
+                    b.Property<string>("Mensagem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Lote")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QtdPessoas")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Tema")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EventoId");
-
-                    b.ToTable("Eventos");
+                    b.ToTable("MensagensContato");
                 });
 #pragma warning restore 612, 618
         }
